@@ -3,7 +3,7 @@
 namespace App\Controllers\Client;
 
 use App\Helpers\AuthHelper;
-use App\Models\User;
+
 use App\Helpers\NotificationHelper;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
@@ -30,7 +30,22 @@ class AuthController{
         Footer::render();
     }
     public static function registerAction(){  
-        
+       
+       
+        // Lấy dữ liệu người dùng nhập
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $hashpassword = password_hash($password,PASSWORD_DEFAULT);
+        $email = $_POST['email'];
+        $name = $_POST['name'];
+
+        // đưa dữ liệu vào mảng, lưu ý "key" trùng với tên cột trong cơ sở dữ liệu
+        $data =[
+            'username' => $username,
+            'password' => $password,
+            'email' => $email,
+            'name' => $email,
+        ];
 
         $result = AuthHelper::register($data);
         if($result){

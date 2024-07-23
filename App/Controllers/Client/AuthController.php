@@ -4,6 +4,9 @@ namespace App\Controllers\Client;
 
 use App\Helpers\AuthHelper;
 use App\Models\User;
+use App\Helpers\AuthHelper;
+use App\Helpers\NotificationHelper;
+use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Auth\Login;
@@ -15,6 +18,13 @@ class AuthController{
     public static function register(){  
         // Hiển thị header
         Header::render();
+
+
+        // hien thi thong bao
+        Notification::render();
+
+        //huy session thong bao
+        NotificationHelper::unset();
         // Hiển thị form đăng ký
         Register::render();
         // Hiển thị footer
@@ -24,7 +34,7 @@ class AuthController{
     public static function registerAction()
     {
         // bắt lỗi validate
-        
+
 
         // lấy dữ liệu người dùng nhập vào
         $username=$_POST['username'];
@@ -39,17 +49,17 @@ class AuthController{
             'username' => $username,
             'password' => $hash_password,
             'email' => $email,
-            
+
         ];
 
-        $result=AuthHelper::register($data);
-
-        if($result){
-            var_dump("them oke");
-        }else{
-            var_dump("them loi");
-        }
+        $result = AuthHelper::register($data);
+               if($result){
+                   header('location: /');
+               }else{
+                   header('location: /register');
+               }
     }
+
     public static function login(){
         // Hiển thị header
         Header::render();

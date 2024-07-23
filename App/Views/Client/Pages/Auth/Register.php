@@ -15,7 +15,8 @@ class Register extends BaseView{
         <div class="offset-md-3 col-md-6">
             <div class="card card-body">
                 <h4 class="text-danger text-center">Sign Up</h4>
-                <form action="*" method="post">
+                <form action="#" method="post">
+                    <input type="hidden" name="method" value="POST" id="">
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" name="username" id="username" class="form-control" placeholder="Nhập tên đăng nhập">
@@ -32,7 +33,10 @@ class Register extends BaseView{
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" class="form-control" placeholder="Nhập email">
                     </div>
-
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="name" name="name" id="name" class="form-control" placeholder="Nhập name">
+                    </div>
                     <button type="reset" class="btn btn-outline-danger">Reset</button>
                     <button type="submit" class="btn btn-outline-info">Sign Up</button>
                 </form>

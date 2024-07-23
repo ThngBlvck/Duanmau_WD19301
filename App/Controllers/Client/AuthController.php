@@ -2,6 +2,8 @@
 
 namespace App\Controllers\Client;
 
+use App\Helpers\AuthHelper;
+use App\Models\User;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Auth\Login;
@@ -17,6 +19,36 @@ class AuthController{
         Register::render();
         // Hiển thị footer
         Footer::render();
+    }
+    // Thực hiện đăng ký
+    public static function registerAction()
+    {
+        // bắt lỗi validate
+        
+
+        // lấy dữ liệu người dùng nhập vào
+        $username=$_POST['username'];
+        $password=$_POST['password'];
+        $hash_password=password_hash($password,PASSWORD_DEFAULT);
+        $email=$_POST['email'];
+        $name=$_POST['name'];
+
+        // đưa dữ liệu vào mảng, lưu ý "key" phải trùng tên cột trong cơ sở dữ liệu
+        $data=[
+            'name' => $name,
+            'username' => $username,
+            'password' => $hash_password,
+            'email' => $email,
+            
+        ];
+
+        $result=AuthHelper::register($data);
+
+        if($result){
+            var_dump("them oke");
+        }else{
+            var_dump("them loi");
+        }
     }
     public static function login(){
         // Hiển thị header

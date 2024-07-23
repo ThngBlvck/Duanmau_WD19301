@@ -9,7 +9,7 @@ class AuthHelper
     public static function register($data)
     {
         $user = new User();
-        // bat ton tai username
+         // bắt lỗi tồn tại username
 
         $is_exist = $user -> getOneUserByUsername($data['username']);
 

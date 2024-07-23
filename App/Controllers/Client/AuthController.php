@@ -34,9 +34,9 @@ class AuthController{
     // Kiểm tra thỏa mãn không?
     // nếu có: tiếp tục chạy lệnh ở dưới
     // nếu không thỏa (lỗi): thông báo và chuyển về trang đăng ký
-       
+
     // $is_valid=true;
-    
+
     // if(!isset($_POST['username']) || $_POST)
 
 

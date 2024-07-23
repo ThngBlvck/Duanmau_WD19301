@@ -29,36 +29,16 @@ class AuthController{
         // Hiển thị footer
         Footer::render();
     }
-    // Thực hiện đăng ký
-    public static function registerAction()
-    {
-        // bắt lỗi validate
-
-
-        // lấy dữ liệu người dùng nhập vào
-        $username=$_POST['username'];
-        $password=$_POST['password'];
-        $hash_password=password_hash($password,PASSWORD_DEFAULT);
-        $email=$_POST['email'];
-        $name=$_POST['name'];
-
-        // đưa dữ liệu vào mảng, lưu ý "key" phải trùng tên cột trong cơ sở dữ liệu
-        $data=[
-            'name' => $name,
-            'username' => $username,
-            'password' => $hash_password,
-            'email' => $email,
-
-        ];
+    public static function registerAction(){  
+        
 
         $result = AuthHelper::register($data);
-               if($result){
-                   header('location: /');
-               }else{
-                   header('location: /register');
-               }
+        if($result){
+            header('location: /');
+        }else{
+            header('location: /register');
+        }
     }
-
     public static function login(){
         // Hiển thị header
         Header::render();

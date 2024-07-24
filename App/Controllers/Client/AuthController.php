@@ -11,10 +11,12 @@ use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Auth\Login;
 use App\Views\Client\Pages\Auth\Register;
 
-class AuthController{
+class AuthController
+{
 
     // hàm hiển thị giao diện form regiter
-    public static function register(){  
+    public static function register()
+    {
         // Hiển thị header
         Header::render();
 
@@ -29,27 +31,28 @@ class AuthController{
         // Hiển thị footer
         Footer::render();
     }
-    public static function registerAction(){  
-    //    bắt lỗi validate
-    // Kiểm tra thỏa mãn không?
-    // nếu có: tiếp tục chạy lệnh ở dưới
-    // nếu không thỏa (lỗi): thông báo và chuyển về trang đăng ký
+    public static function registerAction()
+    {
+        //    bắt lỗi validate
+        // Kiểm tra thỏa mãn không?
+        // nếu có: tiếp tục chạy lệnh ở dưới
+        // nếu không thỏa (lỗi): thông báo và chuyển về trang đăng ký
 
-    // $is_valid=true;
+        // $is_valid=true;
 
-    // if(!isset($_POST['username']) || $_POST)
+        // if(!isset($_POST['username']) || $_POST)
 
 
 
         // Lấy dữ liệu người dùng nhập
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $hash_password = password_hash($password,PASSWORD_DEFAULT);
+        $hash_password = password_hash($password, PASSWORD_DEFAULT);
         $email = $_POST['email'];
         $name = $_POST['name'];
 
         // đưa dữ liệu vào mảng, lưu ý "key" trùng với tên cột trong cơ sở dữ liệu
-        $data =[
+        $data = [
             'username' => $username,
             'password' => $hash_password,
             'email' => $email,
@@ -57,18 +60,47 @@ class AuthController{
         ];
 
         $result = AuthHelper::register($data);
-        if($result){
-            header('location: /');
-        }else{
+        if ($result) {
+            header('location: /login');
+        } else {
             header('location: /register');
         }
     }
-    public static function login(){
+    public static function login()
+    {
         // Hiển thị header
         Header::render();
+        Notification::render();
+        NotificationHelper::unset();
         // Hiển thị form đăng nhập
         Login::render();
         // Hiển thị footer
         Footer::render();
+    }
+    public static function loginAction()
+    {
+        // bat loi 
+        // $is_valid = AuthValidation::login();
+        // if(!is_valid){
+        //     NotificationHelper::error('login','Đăng nhập thất bại!');
+        //     header('Location: /login');
+        //     exit();
+        // }
+
+        $data = [
+            'username' => $_POST['username'],
+            'password' => $_POST['password'],
+            'remember' => isset($_POST['member']),
+
+        ];
+
+        $result = AuthHelper::login($data);
+        if ($result) {
+            // NotificationHelper::success('login', 'Đăng nhập thành công');
+            header('Location: /');
+        } else {
+            // NotificationHelper::error('login', 'Đăng nhập thất bại');
+            header('Location: /login');
+        }
     }
 }

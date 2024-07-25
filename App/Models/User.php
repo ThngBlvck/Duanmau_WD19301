@@ -62,9 +62,9 @@ class User extends BaseModel
 
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
-            return $stmt->execute();
+            $stmt->execute();
              // trả về số hàng dữ liệu bị ảnh hưởng
-//              return $stmt->affected_rows;
+             return $stmt->affected_rows;
         } catch (\Throwable $th) {
             error_log('Lỗi khi cập nhật dữ liệu: ', $th->getMessage());
             NotificationHelper::error('updateUserByUsernameAndEmail','Lỗi khi thực hiện cập nhật dữ liệu');

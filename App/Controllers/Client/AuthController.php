@@ -5,6 +5,7 @@ namespace App\Controllers\Client;
 use App\Helpers\AuthHelper;
 
 use App\Helpers\NotificationHelper;
+use App\Validations\AuthValidation;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
@@ -35,11 +36,13 @@ class AuthController{
     // nếu có: tiếp tục chạy lệnh ở dưới
     // nếu không thỏa (lỗi): thông báo và chuyển về trang đăng ký
 
-    // $is_valid=true;
+    $is_valid=AuthValidation::register();
 
-    // if(!isset($_POST['username']) || $_POST)
-
-
+    if(!$is_valid){
+        NotificationHelper::error('register_valid', 'Đăng ký thất bại');
+        header('location: /register');
+        exit();
+    }
 
         // Lấy dữ liệu người dùng nhập
         $username = $_POST['username'];

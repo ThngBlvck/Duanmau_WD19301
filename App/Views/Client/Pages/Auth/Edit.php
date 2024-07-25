@@ -48,8 +48,10 @@ class Edit extends BaseView
                                 <label for="avatar">Ảnh đại diện</label>
                                 <input type="file" name="avatar" id="avatar" class="form-control" placeholder="chọn ảnh đại diện">
                             </div>
-                            <button type="reset" class="btn btn-outline-danger">Nhập lại</button>
-                            <button type="submit" class="btn btn-outline-info">Cập nhật</button>
+                            <button type="reset" class="btn btn-outline-danger mb-3">Nhập lại</button>
+                            <button type="submit" class="btn btn-outline-info mb-3">Cập nhật</button>
+                            <br>
+                            <a href="/change-password" class="text-danger">Đổi mật khẩu</a>
                         </form>
                     </div>
                 </div>

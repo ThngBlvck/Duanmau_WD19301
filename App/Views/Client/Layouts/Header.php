@@ -64,7 +64,9 @@ class Header extends BaseView
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <!-- <a class="nav-link" href="/logout">Đăng xuất</a> -->
                                         <a class="dropdown-item" href="/users/<?= $_SESSION['user']['id'] ?>"><?= $_SESSION['user']['name']?></a>
+                                        <a class="dropdown-item" href="/change-password">Đổi mật khẩu</a>
                                         <a class="dropdown-item" href="/logout">Đăng xuất</a>
+
                                     </div>
                                 
                                 </div>

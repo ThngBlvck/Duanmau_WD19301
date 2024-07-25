@@ -31,6 +31,10 @@ Route::get('/logout','App\Controllers\Client\AuthController@logout');
 
 Route::get('/users/{id}','App\Controllers\Client\AuthController@edit');
 Route::put('/users/{id}','App\Controllers\Client\AuthController@update');
+
+Route::get('/change-password','App\Controllers\Client\AuthController@changePassword');
+Route::put('/change-password','App\Controllers\Client\AuthController@changePasswordAction');
+
 // *** Admin
 
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');

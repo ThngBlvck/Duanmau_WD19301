@@ -10,14 +10,17 @@ use App\Validations\AuthValidation;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
+use App\Views\Client\Pages\Auth\ChangePassword;
 use App\Views\Client\Pages\Auth\Login;
 use App\Views\Client\Pages\Auth\Register;
 use App\Views\Client\Pages\Auth\Edit;
 
-class AuthController{
+class AuthController
+{
 
     // hàm hiển thị giao diện form regiter
-    public static function register(){  
+    public static function register()
+    {
         // Hiển thị header
         Header::render();
 
@@ -32,29 +35,30 @@ class AuthController{
         // Hiển thị footer
         Footer::render();
     }
-    public static function registerAction(){  
-    //    bắt lỗi validate
-    // Kiểm tra thỏa mãn không?
-    // nếu có: tiếp tục chạy lệnh ở dưới
-    // nếu không thỏa (lỗi): thông báo và chuyển về trang đăng ký
+    public static function registerAction()
+    {
+        //    bắt lỗi validate
+        // Kiểm tra thỏa mãn không?
+        // nếu có: tiếp tục chạy lệnh ở dưới
+        // nếu không thỏa (lỗi): thông báo và chuyển về trang đăng ký
 
-    $is_valid=AuthValidation::register();
+        $is_valid = AuthValidation::register();
 
-    if(!$is_valid){
-        NotificationHelper::error('register_valid', 'Đăng ký thất bại');
-        header('location: /register');
-        exit();
-    }
+        if (!$is_valid) {
+            NotificationHelper::error('register_valid', 'Đăng ký thất bại');
+            header('location: /register');
+            exit();
+        }
 
         // Lấy dữ liệu người dùng nhập
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $hash_password = password_hash($password,PASSWORD_DEFAULT);
+        $hash_password = password_hash($password, PASSWORD_DEFAULT);
         $email = $_POST['email'];
         $name = $_POST['name'];
 
         // đưa dữ liệu vào mảng, lưu ý "key" trùng với tên cột trong cơ sở dữ liệu
-        $data =[
+        $data = [
             'username' => $username,
             'password' => $hash_password,
             'email' => $email,
@@ -62,13 +66,14 @@ class AuthController{
         ];
 
         $result = AuthHelper::register($data);
-        if($result){
+        if ($result) {
             header('location: /');
-        }else{
+        } else {
             header('location: /register');
         }
     }
-    public static function login(){
+    public static function login()
+    {
         // Hiển thị header
         Header::render();
         Notification::render();
@@ -83,8 +88,8 @@ class AuthController{
         // bat loi
         $is_valid = AuthValidation::login();
 
-        if(!$is_valid){
-            NotificationHelper::error('login','Đăng nhập thất bại!');
+        if (!$is_valid) {
+            NotificationHelper::error('login', 'Đăng nhập thất bại!');
             header('Location: /login');
             exit();
         }
@@ -106,56 +111,99 @@ class AuthController{
         }
     }
 
-    public static function logout(){
+    public static function logout()
+    {
         AuthHelper::logout();
         NotificationHelper::success('logout', 'Đăng xuất thành công');
         header('Location: /');
     }
 
-    public static function edit($id){
-        $result=AuthHelper::edit($id);
-        if(!$result){
-            if(isset($_SESSION['error']['login'])){
+    public static function edit($id)
+    {
+        $result = AuthHelper::edit($id);
+        if (!$result) {
+            if (isset($_SESSION['error']['login'])) {
                 header('Location: /login');
                 exit;
             }
-            if(isset($_SESSION['error']['user_id'])){
-                $data =$_SESSION['user'];
+            if (isset($_SESSION['error']['user_id'])) {
+                $data = $_SESSION['user'];
                 $user_id = $data['id'];
                 header("Location: /users/$user_id");
                 exit;
             }
         }
-        $data =$_SESSION['user'];
+        $data = $_SESSION['user'];
         header::render();
         Notification::render();
         NotificationHelper::unset();
         // giao dien thong tin user
         Edit::render($data);
-        
+
         Footer::render();
     }
 
-    public static function update($id){
-        $is_valid=AuthValidation::edit();
-        if(!$is_valid){
-            NotificationHelper::error('update_user','Cập nhật thông tin thất bại');
+    public static function update($id)
+    {
+        $is_valid = AuthValidation::edit();
+        if (!$is_valid) {
+            NotificationHelper::error('update_user', 'Cập nhật thông tin thất bại');
             header("Location: /users/$id");
             exit();
         }
         $data = [
             'email' => $_POST['email'],
-            'name' => $_POST['name'],  
+            'name' => $_POST['name'],
         ];
         // Kiểm tra có upload hình ảnh hay không, nếu có: Kiểm tra có hợp lệ không?
-        $is_upload=AuthValidation::uploadAvatar();
-        if($is_upload){
-            $data['avatar'] =$is_upload;
+        $is_upload = AuthValidation::uploadAvatar();
+        if ($is_upload) {
+            $data['avatar'] = $is_upload;
         }
-        
+
         // gọi helper để update 
-        $result=AuthHelper::update($id,$data);
+        $result = AuthHelper::update($id, $data);
         // Kiểm tra kết quả trả về và chuyển hướng
         header("Location: /users/$id");
     }
+    // Hiển thị form đổi mật khẩu
+    public static function changePassword()
+    {
+        $is_login = AuthHelper::checkLogin();
+
+        if (!$is_login) {
+            NotificationHelper::error('login', 'Vui lòng đăng nhập để đổi mật khẩu');
+            header('location: /login');
+            exit();
+        }
+
+        $data = $_SESSION['user'];
+
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        ChangePassword::render($data);
+        Footer::render();
+    }
+// Thực hiện đổi mật khẩu
+    public static function changePasswordAction(){
+        // validation
+        $is_valid=AuthValidation::changePassword();
+        if(!$is_valid){
+            NotificationHelper::error('change-password', 'Đổi mật khẩu thất bại');
+            header('location: /change-password');
+            exit(); 
+        }
+
+        $id=$_SESSION['user']['id'];
+        $data=[
+            'old_password'=>$_POST['old_password'],
+            'new_password'=>$_POST['new_password'],
+        ];
+        // Gọi AuthHelper
+        $result=AuthHelper::changePassword($id, $data);
+        header('Location: /change-password');
+    }
+
+ 
 }

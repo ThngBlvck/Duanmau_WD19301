@@ -128,10 +128,52 @@ class AuthHelper
         }
         $data = $_SESSION['user'];
         $user_id = $data['id'];
-        if($user_id!==$id) {
-            NotificationHelper::error('user_id','Không có quyền xem thông tin tài khoản này');
+        if ($user_id !== $id) {
+            NotificationHelper::error('user_id', 'Không có quyền xem thông tin tài khoản này');
             return false;
         }
         return true;
+    }
+
+    public static function forgotPassword($data)
+    {
+        $user = new User();
+
+        $result = $user->getOneUserByUsername($data['username']);
+        return $result;
+    }
+
+    public static function resetPassword($data)
+    {
+        $user = new User();
+        $result = $user->updateUserByUsernameAndEmail($data);
+        return $result;
+    }
+
+    public static function middleware()
+    {
+        // var_dump($_SERVER['REQUEST_URI']);
+        $admin = explode('/', $_SERVER['REQUEST_URI']);
+        // var_dump($admin);
+        $admin = $admin[1];
+        if ($admin == 'admin') {
+            // if(!isset($_SESSION['user']) || $_SESSION['user']==['role'] !=1){
+            //     NotificationHelper::error('admin', 'tài khoản này không có quyền truy cập');
+            //     header('location: /login');
+            //     exit;
+            // }
+            if (!isset($_SESSION['user'])) {
+                NotificationHelper::error('admin', 'Vui lòng đăng nhập');
+                header('location: /login');
+                exit;
+            }
+
+            if ($_SESSION['user']['role'] != 1) {
+                NotificationHelper::error('admin', 'tài khoản này không có quyền truy cập');
+                header('location: /login');
+                exit;
+            }
+            
+        }
     }
 }

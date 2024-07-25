@@ -5,7 +5,6 @@ namespace App\Controllers\Client;
 use App\Helpers\AuthHelper;
 
 use App\Helpers\NotificationHelper;
-use App\Validations\AuthValidation;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;

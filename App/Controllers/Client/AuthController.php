@@ -10,6 +10,7 @@ use App\Validations\AuthValidation;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
+use App\Views\Client\Pages\Auth\ChangePassword;
 use App\Views\Client\Pages\Auth\Login;
 use App\Views\Client\Pages\Auth\Register;
 use App\Views\Client\Pages\Auth\Edit;
@@ -199,9 +200,6 @@ class AuthController{
         $result=AuthHelper::changePassword($id, $data);
         header('Location: /change-password');
     }
-
-
-}
 
     // hien thi giao dien form lay lai mat khau
     public static function forgotPassword()

@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 ini_set('log_errors', TRUE); 
 ini_set('error_log', './logs/php/php-errors.log');
 
+use App\Helpers\AuthHelper;
 use App\Route;
 
 require_once 'vendor/autoload.php';
@@ -15,7 +16,8 @@ $dotenv->load();
 
 require_once 'config.php';
 
-
+AuthHelper::middleware();
+// exit;
 
 // *** Client
 Route::get('/', 'App\Controllers\Client\HomeController@index');
@@ -34,6 +36,15 @@ Route::put('/users/{id}','App\Controllers\Client\AuthController@update');
 
 Route::get('/change-password','App\Controllers\Client\AuthController@changePassword');
 Route::put('/change-password','App\Controllers\Client\AuthController@changePasswordAction');
+
+
+
+Route::get('/forgot-password','App\Controllers\Client\AuthController@forgotPassword');
+Route::post('/forgot-password','App\Controllers\Client\AuthController@forgotPasswordAction');
+
+
+Route::get('/reset-password','App\Controllers\Client\AuthController@resetPassword');
+Route::put('/reset-password','App\Controllers\Client\AuthController@resetPasswordAction');
 
 // *** Admin
 

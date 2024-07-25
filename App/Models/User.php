@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Helpers\NotificationHelper;
+
 class User extends BaseModel
 {
     protected $table = 'users';
@@ -47,6 +49,26 @@ class User extends BaseModel
         } catch (\Throwable $th) {
             error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
             return $result;
+        }
+    }
+
+    public function updateUserByUsernameAndEmail( array $data)
+    {
+        try {
+            $username = $data['username'];
+            $email = $data['email'];
+            $password = $data['password'];
+            $sql = "UPDATE $this->table SET password='$password' WHERE username='$username' AND email='$email'";
+
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            // return $stmt->execute();
+             // trả về số hàng dữ liệu bị ảnh hưởng
+             return $stmt->affected_rows;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi cập nhật dữ liệu: ', $th->getMessage());
+            NotificationHelper::error('updateUserByUsernameAndEmail','Lỗi khi thực hiện cập nhật dữ liệu');
+            return false;
         }
     }
 }

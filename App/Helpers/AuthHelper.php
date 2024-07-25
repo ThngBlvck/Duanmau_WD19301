@@ -128,10 +128,34 @@ class AuthHelper
         }
         $data = $_SESSION['user'];
         $user_id = $data['id'];
+
+        if(isset($_COOKIE['user'])){
+            self::updateCookie($user_id);
+        }
+        self::updateSession($user_id);
+
         if($user_id!==$id) {
             NotificationHelper::error('user_id','Không có quyền xem thông tin tài khoản này');
             return false;
         }
+        return true;
+    }
+    
+    public static function update($id, $data){
+        $user = new User();
+        $result=$user->updateUser($id, $data);
+
+        if(!$result){
+            NotificationHelper::error('update_user','Cập nhật thông tin tài khoản thất bại');
+            return false;
+        }
+        if($_SESSION['user']){
+            self::updateSession($id);
+        }
+        if($_COOKIE['user']){
+            self::updateCookie($id);
+        }
+        NotificationHelper::success('update_user', 'Cập nhật thông tin tài khoản thành công');
         return true;
     }
 }

@@ -135,4 +135,27 @@ class AuthController{
         
         Footer::render();
     }
+
+    public static function update($id){
+        $is_valid=AuthValidation::edit();
+        if(!$is_valid){
+            NotificationHelper::error('update_user','Cập nhật thông tin thất bại');
+            header("Location: /users/$id");
+            exit();
+        }
+        $data = [
+            'email' => $_POST['email'],
+            'name' => $_POST['name'],  
+        ];
+        // Kiểm tra có upload hình ảnh hay không, nếu có: Kiểm tra có hợp lệ không?
+        $is_upload=AuthValidation::uploadAvatar();
+        if($is_upload){
+            $data['avatar'] =$is_upload;
+        }
+        
+        // gọi helper để update 
+        $result=AuthHelper::update($id,$data);
+        // Kiểm tra kết quả trả về và chuyển hướng
+        header("Location: /users/$id");
+    }
 }

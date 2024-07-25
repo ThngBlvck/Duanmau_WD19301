@@ -30,6 +30,7 @@ Route::post('/login','App\Controllers\Client\AuthController@loginAction');
 Route::get('/logout','App\Controllers\Client\AuthController@logout');
 
 Route::get('/users/{id}','App\Controllers\Client\AuthController@edit');
+Route::put('/users/{id}','App\Controllers\Client\AuthController@update');
 // *** Admin
 
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');

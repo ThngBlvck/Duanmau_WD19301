@@ -55,8 +55,21 @@ class Header extends BaseView
                         if ($is_login) :
                         ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="/login">Đăng xuất</a>
+
+                                <div class="dropdown show">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Tài Khoản
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <!-- <a class="nav-link" href="/logout">Đăng xuất</a> -->
+                                        <a class="dropdown-item" href="/users/<?= $_SESSION['user']['id'] ?>"><?= $_SESSION['user']['name']?></a>
+                                        <a class="dropdown-item" href="/logout">Đăng xuất</a>
+                                    </div>
+                                
+                                </div>
                             </li>
+
                         <?php
                         else :
                         ?>

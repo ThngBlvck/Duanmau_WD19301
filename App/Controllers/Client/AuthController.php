@@ -6,11 +6,13 @@ use App\Helpers\AuthHelper;
 
 use App\Helpers\NotificationHelper;
 use App\Validations\AuthValidation;
+// use App\Views\Admin\Pages\Category\Edit;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Auth\Login;
 use App\Views\Client\Pages\Auth\Register;
+use App\Views\Client\Pages\Auth\Edit;
 
 class AuthController{
 
@@ -102,5 +104,35 @@ class AuthController{
             // NotificationHelper::error('login', 'Đăng nhập thất bại');
             header('Location: /login');
         }
+    }
+
+    public static function logout(){
+        AuthHelper::logout();
+        NotificationHelper::success('logout', 'Đăng xuất thành công');
+        header('Location: /');
+    }
+
+    public static function edit($id){
+        $result=AuthHelper::edit($id);
+        if(!$result){
+            if(isset($_SESSION['error']['login'])){
+                header('Location: /login');
+                exit;
+            }
+            if(isset($_SESSION['error']['user_id'])){
+                $data =$_SESSION['user'];
+                $user_id = $data['id'];
+                header("Location: /users/$user_id");
+                exit;
+            }
+        }
+        $data =$_SESSION['user'];
+        header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        // giao dien thong tin user
+        Edit::render($data);
+        
+        Footer::render();
     }
 }

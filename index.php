@@ -27,7 +27,9 @@ Route::post('/register','App\Controllers\Client\AuthController@registerAction');
 
 Route::get('/login','App\Controllers\Client\AuthController@login');
 Route::post('/login','App\Controllers\Client\AuthController@loginAction');
+Route::get('/logout','App\Controllers\Client\AuthController@logout');
 
+Route::get('/users/{id}','App\Controllers\Client\AuthController@edit');
 // *** Admin
 
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');

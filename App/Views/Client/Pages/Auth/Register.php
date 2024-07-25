@@ -15,7 +15,7 @@ class Register extends BaseView{
         <div class="offset-md-3 col-md-6">
             <div class="card card-body">
                 <h4 class="text-danger text-center">Sign Up</h4>
-                <form action="#" method="post">
+                <form action="/register" method="post">
                     <input type="hidden" name="method" value="POST" id="">
                     <div class="form-group">
                         <label for="username">Username</label>

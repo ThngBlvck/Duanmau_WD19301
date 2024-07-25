@@ -66,7 +66,7 @@ class AuthHelper
         }
 
         NotificationHelper::success('login', 'Đăng nhập thành công');
-        
+
         return true;
     }
 
@@ -89,22 +89,49 @@ class AuthHelper
         $user = new User();
         $result = $user->getOneUser($id);
         if ($result) {
-           
+
             //lưu session
             $_SESSION['user'] = $result;
         }
     }
 
-    public static function checkLogin(){
-        if(isset($_COOKIE['user'])){
+    public static function checkLogin()
+    {
+        if (isset($_COOKIE['user'])) {
             $user = $_COOKIE['user'];
             $user_data = json_decode($user);
-            $_SESSION['user']=(array) $user_data;
+            $_SESSION['user'] = (array) $user_data;
             return true;
         }
-        if(isset($_SESSION['user'])){
+        if (isset($_SESSION['user'])) {
             return true;
         }
         return false;
+    }
+
+    public static function logout()
+    {
+
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
+        }
+        if (isset($_COOKIE['user'])) {
+            setcookie('user', '', time() - 3600 * 24 * 30 * 12, '/');
+        }
+    }
+
+    public static function edit($id): bool
+    {
+        if (!self::checkLogin()) {
+            NotificationHelper::error('login', 'Vui lòng đăng nhập để xem thông tin');
+            return false;
+        }
+        $data = $_SESSION['user'];
+        $user_id = $data['id'];
+        if($user_id!==$id) {
+            NotificationHelper::error('user_id','Không có quyền xem thông tin tài khoản này');
+            return false;
+        }
+        return true;
     }
 }

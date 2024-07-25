@@ -15,7 +15,8 @@ class Login extends BaseView{
         <div class="offset-md-3 col-md-6">
             <div class="card card-body">
                 <h4 class="text-danger text-center">Sign In</h4>
-                <form action="*" method="post">
+                <form action="/login" method="post">
+                    <input type="hidden" name="method" value="POST">
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" name="username" id="username" class="form-control" placeholder="Nhập tên đăng nhập">
@@ -24,6 +25,13 @@ class Login extends BaseView{
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" class="form-control" placeholder="Nhập mật khẩu">
                     </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="" name="remember" checked/>
+                        <label class="form-check-label" for=""> Remember!</label>
+                    </div>
+                
+                    
                     <button type="reset" class="btn btn-outline-danger">Reset</button>
                     <button type="submit" class="btn btn-outline-info">Sign In</button>
                     <br>

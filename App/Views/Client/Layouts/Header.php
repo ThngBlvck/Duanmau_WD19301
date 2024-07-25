@@ -9,8 +9,12 @@ class Header extends BaseView
 {
     public static function render($data = null)
     {
+        // unset($_SESSION['user']);
 
+        // var_dump($_SESSION['user']);
+        // var_dump(json_decode($_COOKIE['user']));
 
+        $is_login = AuthHelper::checkLogin();
 ?>
 
 
@@ -47,13 +51,26 @@ class Header extends BaseView
                         <li class="nav-item">
                             <a class="nav-link" href="#">Giỏ hàng</a>
                         </li>
-            
+                        <?php
+                        if ($is_login) :
+                        ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">Đăng xuất</a>
+                            </li>
+                        <?php
+                        else :
+                        ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="/login">Đăng nhập</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/register">Đăng ký</a>
                             </li>
+                        <?php
+                        endif;
+                        ?>
+
+
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

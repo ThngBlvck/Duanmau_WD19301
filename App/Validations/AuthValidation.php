@@ -55,4 +55,22 @@ class AuthValidation
         }
         return $is_valid;
     }
+
+
+    public static function login(): bool
+    {
+        $is_valid = true;
+        // Username
+        if (!isset($_POST['username']) || $_POST['username'] == '') {
+            NotificationHelper::error('username', 'Vui lòng không để trống username');
+            $is_valid = false;
+        }
+        // Password
+        if (!isset($_POST['password']) || $_POST['password'] == '') {
+            NotificationHelper::error('password', 'Vui lòng không để trống password');
+            $is_valid = false;
+        } 
+        
+        return $is_valid;
+    }
 }

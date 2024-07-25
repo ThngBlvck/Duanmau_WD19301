@@ -79,12 +79,13 @@ class AuthController{
     public static function loginAction()
     {
         // bat loi
-        // $is_valid = AuthValidation::login();
-        // if(!is_valid){
-        //     NotificationHelper::error('login','Đăng nhập thất bại!');
-        //     header('Location: /login');
-        //     exit();
-        // }
+        $is_valid = AuthValidation::login();
+
+        if(!$is_valid){
+            NotificationHelper::error('login','Đăng nhập thất bại!');
+            header('Location: /login');
+            exit();
+        }
 
         $data = [
             'username' => $_POST['username'],

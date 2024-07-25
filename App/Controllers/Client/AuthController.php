@@ -5,7 +5,6 @@ namespace App\Controllers\Client;
 use App\Helpers\AuthHelper;
 
 use App\Helpers\NotificationHelper;
-use App\Validations\AuthValidation;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
@@ -69,9 +68,37 @@ class AuthController{
     public static function login(){
         // Hiển thị header
         Header::render();
+        Notification::render();
+        NotificationHelper::unset();
         // Hiển thị form đăng nhập
         Login::render();
         // Hiển thị footer
         Footer::render();
+    }
+    public static function loginAction()
+    {
+        // bat loi
+        // $is_valid = AuthValidation::login();
+        // if(!is_valid){
+        //     NotificationHelper::error('login','Đăng nhập thất bại!');
+        //     header('Location: /login');
+        //     exit();
+        // }
+
+        $data = [
+            'username' => $_POST['username'],
+            'password' => $_POST['password'],
+            'remember' => isset($_POST['member']),
+
+        ];
+
+        $result = AuthHelper::login($data);
+        if ($result) {
+            // NotificationHelper::success('login', 'Đăng nhập thành công');
+            header('Location: /');
+        } else {
+            // NotificationHelper::error('login', 'Đăng nhập thất bại');
+            header('Location: /login');
+        }
     }
 }

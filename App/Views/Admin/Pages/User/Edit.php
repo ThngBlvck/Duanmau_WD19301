@@ -24,7 +24,7 @@ class Edit extends BaseView
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Sửa loại sản phẩm</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Sửa người dùng</li>
                                 </ol>
                             </nav>
                         </div>
@@ -46,7 +46,7 @@ class Edit extends BaseView
                         <div class="card">
                             <form class="form-horizontal" action="/admin/users/<?= $data['id'] ?>" method="POST" enctype="multipart/form-data">
                                 <div class="card-body">
-                                    <h4 class="card-title">Sửa loại sản phẩm</h4>
+                                    <h4 class="card-title">Sửa người dùng</h4>
                                     <input type="hidden" name="method" id="" value="PUT">
                                     <div align="center">
                                         <img src="<?=APP_URL?>/public/uploads/users/<?=$data['avatar']?>" alt="" width="200px">
@@ -77,7 +77,7 @@ class Edit extends BaseView
                                         <input type="password" class="form-control" id="re_password" placeholder="Nhập lại mật khẩu..." name="re_password" >
                                     </div>
                                     <div class="form-group">
-                                        <label for="avatar">Nhập lại mật khẩu*</label>
+                                        <label for="avatar">Hình đại diện*</label>
                                         <input type="file" class="form-control" id="avatar" placeholder="Chọn ảnh đại điện..." name="avatar" >
                                     </div>
                                     <div class="form-group">

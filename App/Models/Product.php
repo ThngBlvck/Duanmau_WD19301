@@ -70,12 +70,12 @@ class Product extends BaseModel
         $result = [];
         try {
             // $sql = "SELECT * FROM $this->table WHERE $this->id=?";
-            $sql = "SELECT products.*, categories.name AS category_name FROM products 
-            INNER JOIN categories ON products.category_id = categories.id 
-            WHERE products.status = " . self::STATUS_ENABLE . " 
-            AND categories.status = " . self::STATUS_ENABLE . " 
+            $sql = "SELECT products.*, categories.name AS category_name FROM products
+            INNER JOIN categories ON products.category_id = categories.id
+            WHERE products.status = " . self::STATUS_ENABLE . "
+            AND categories.status = " . self::STATUS_ENABLE . "
             AND products.category_id = ?";
-    
+
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
 

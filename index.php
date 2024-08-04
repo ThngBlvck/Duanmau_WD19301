@@ -23,6 +23,7 @@ AuthHelper::middleware();
 Route::get('/', 'App\Controllers\Client\HomeController@index');
 Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
+Route::get('/products/categories/{id}', 'App\Controllers\Client\ProductController@getProductByCategory');
 
 Route::get('/register','App\Controllers\Client\AuthController@register');
 Route::post('/register','App\Controllers\Client\AuthController@registerAction');

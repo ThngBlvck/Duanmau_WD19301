@@ -11,12 +11,12 @@ class AuthValidation
     {
         $is_valid = true;
         // Username
-        if (!isset($_POST['username']) || $_POST['username'] == '') {
+        if (!isset($_POST['username']) || $_POST['username'] === '') {
             NotificationHelper::error('username', 'Vui lòng không để trống username');
             $is_valid = false;
         }
         // Password
-        if (!isset($_POST['password']) || $_POST['password'] == '') {
+        if (!isset($_POST['password']) || $_POST['password'] === '') {
             NotificationHelper::error('password', 'Vui lòng không để trống password');
             $is_valid = false;
         } else {
@@ -27,7 +27,7 @@ class AuthValidation
             }
         }
         // Re_password
-        if (!isset($_POST['re_password']) || $_POST['re_password'] == '') {
+        if (!isset($_POST['re_password']) || $_POST['re_password'] === '') {
             NotificationHelper::error('re_password', 'Vui lòng không để trống re_password');
             $is_valid = false;
         } else {
@@ -37,7 +37,7 @@ class AuthValidation
             }
         }
         // Email
-        if (!isset($_POST['email']) || $_POST['email'] == '') {
+        if (!isset($_POST['email']) || $_POST['email'] === '') {
             NotificationHelper::error('email', 'Vui lòng không để trống email');
             $is_valid = false;
         } else {
@@ -49,7 +49,7 @@ class AuthValidation
             }
         }
         // Name
-        if (!isset($_POST['name']) || $_POST['name'] == '') {
+        if (!isset($_POST['name']) || $_POST['name'] === '') {
             NotificationHelper::error('name', 'Vui lòng không để trống Name');
             $is_valid = false;
         }
@@ -61,12 +61,12 @@ class AuthValidation
     {
         $is_valid = true;
         // Username
-        if (!isset($_POST['username']) || $_POST['username'] == '') {
+        if (!isset($_POST['username']) || $_POST['username'] === '') {
             NotificationHelper::error('username', 'Vui lòng không để trống username');
             $is_valid = false;
         }
         // Password
-        if (!isset($_POST['password']) || $_POST['password'] == '') {
+        if (!isset($_POST['password']) || $_POST['password'] === '') {
             NotificationHelper::error('password', 'Vui lòng không để trống password');
             $is_valid = false;
         }
@@ -77,7 +77,7 @@ class AuthValidation
     {
         $is_valid = true;
         // Email
-        if (!isset($_POST['email']) || $_POST['email'] == '') {
+        if (!isset($_POST['email']) || $_POST['email'] === '') {
             NotificationHelper::error('email', 'Vui lòng không để trống email');
             $is_valid = false;
         } else {
@@ -89,7 +89,7 @@ class AuthValidation
             }
         }
         // Name
-        if (!isset($_POST['name']) || $_POST['name'] == '') {
+        if (!isset($_POST['name']) || $_POST['name'] === '') {
             NotificationHelper::error('name', 'Vui lòng không để trống Name');
             $is_valid = false;
         }
@@ -125,12 +125,12 @@ class AuthValidation
     {
         $is_valid = true;
         // Password Old
-        if (!isset($_POST['old_password']) || $_POST['old_password'] == '') {
+        if (!isset($_POST['old_password']) || $_POST['old_password'] === '') {
             NotificationHelper::error('old_password', 'Vui lòng không để trống password cũ');
             $is_valid = false;
         }
         // Password New
-        if (!isset($_POST['new_password']) || $_POST['new_password'] == '') {
+        if (!isset($_POST['new_password']) || $_POST['new_password'] === '') {
             NotificationHelper::error('new_password', 'Vui lòng không để trống password mới');
             $is_valid = false;
         } else {
@@ -141,7 +141,7 @@ class AuthValidation
             }
         }
         // Re_password
-        if (!isset($_POST['re_password']) || $_POST['re_password'] == '') {
+        if (!isset($_POST['re_password']) || $_POST['re_password'] === '') {
             NotificationHelper::error('re_password', 'Vui lòng không để trống re_password mới');
             $is_valid = false;
         } else {
@@ -159,7 +159,7 @@ class AuthValidation
     {
         $is_valid = true;
         // Username
-        if (!isset($_POST['username']) || $_POST['username'] == '') {
+        if (!isset($_POST['username']) || $_POST['username'] === '') {
             NotificationHelper::error('username', 'Vui lòng không để trống username');
             $is_valid = false;
         }
@@ -167,7 +167,7 @@ class AuthValidation
         
         
         // Email
-        if (!isset($_POST['email']) || $_POST['email'] == '') {
+        if (!isset($_POST['email']) || $_POST['email'] === '') {
             NotificationHelper::error('email', 'Vui lòng không để trống email');
             $is_valid = false;
         } else {
@@ -187,7 +187,7 @@ class AuthValidation
         $is_valid = true;
        
         // Password
-        if (!isset($_POST['password']) || $_POST['password'] == '') {
+        if (!isset($_POST['password']) || $_POST['password'] === '') {
             NotificationHelper::error('password', 'Vui lòng không để trống password');
             $is_valid = false;
         } else {
@@ -198,7 +198,7 @@ class AuthValidation
             }
         }
         // Re_password
-        if (!isset($_POST['re_password']) || $_POST['re_password'] == '') {
+        if (!isset($_POST['re_password']) || $_POST['re_password'] === '') {
             NotificationHelper::error('re_password', 'Vui lòng không để trống re_password');
             $is_valid = false;
         } else {

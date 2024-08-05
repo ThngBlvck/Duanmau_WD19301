@@ -51,7 +51,7 @@ class Create extends BaseView
                                     <div class="form-group">
                                         <label for="name">Tên*</label>
                                         <input type="text" class="form-control" id="name" placeholder="Nhập tên sản phẩm..."
-                                            name="name" required>
+                                            name="name" >
                                     </div>
                                     <div class="form-group">
                                         <label for="image">Hình ảnh</label>
@@ -61,12 +61,12 @@ class Create extends BaseView
                                     <div class="form-group">
                                         <label for="price">Giá tiền*</label>
                                         <input type="number" class="form-control" id="price" placeholder="Nhập giá tiền..."
-                                            name="price" required min="0">
+                                            name="price">
                                     </div>
                                     <div class="form-group">
                                         <label for="discount_price">Giá giảm*</label>
                                         <input type="number" class="form-control" id="discount_price"
-                                            placeholder="Nhập giá giảm..." name="discount_price" required value="0" min="0">
+                                            placeholder="Nhập giá giảm..." name="discount_price" >
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Mô tả</label>
@@ -77,7 +77,7 @@ class Create extends BaseView
                                     <div class="form-group">
                                         <label for="category_id">Loại sản phẩm*</label>
                                         <select class="select2 form-select shadow-none" style="width: 100%; height:36px;"
-                                            id="category_id" name="category_id" required>
+                                            id="category_id" name="category_id" >
                                             <option value="" selected disabled>Vui lòng chọn...</option>
                                             <?php
                                             foreach ($data as $item):
@@ -92,7 +92,7 @@ class Create extends BaseView
                                     <div class="form-group">
                                         <label for="is_featured">Sản phẩm nổi bật*</label>
                                         <select class="select2 form-select shadow-none" style="width: 100%; height:36px;"
-                                            id="is_featured" name="is_featured" required>
+                                            id="is_featured" name="is_featured" >
                                             <option value="" selected disabled>Vui lòng chọn...</option>
                                             <option value="1">Nổi bật</option>
                                             <option value="0">Không</option>
@@ -102,7 +102,7 @@ class Create extends BaseView
                                     <div class="form-group">
                                         <label for="status">Trạng thái*</label>
                                         <select class="select2 form-select shadow-none" style="width: 100%; height:36px;"
-                                            id="status" name="status" required>
+                                            id="status" name="status" >
                                             <option value="" selected disabled>Vui lòng chọn...</option>
                                             <option value="1">Hiển thị</option>
                                             <option value="0">Ẩn</option>

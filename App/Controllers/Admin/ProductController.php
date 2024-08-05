@@ -47,7 +47,7 @@ class ProductController
 
             if ($is_exist) {
                 NotificationHelper::error('name', 'Tên sản phẩm đã tồn tại');
-                header('location: /admin/product/create');
+                header('location: /admin/products/create');
             } else {
                 $nameImage = self::handleImageUpload();
 

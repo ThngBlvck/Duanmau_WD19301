@@ -54,9 +54,9 @@ class Product extends BaseModel
         $result = [];
         try {
             // $sql = "SELECT * FROM $this->table";
-            $sql = "SELECT products.*,categories.name AS category_name 
-            FROM products 
-            INNER JOIN categories 
+            $sql = "SELECT products.*,categories.name AS category_name
+            FROM products
+            INNER JOIN categories
             ON products.category_id=category_id;";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);

@@ -54,7 +54,6 @@ class Index extends BaseView
                                                     <th>ID</th>
                                                     <th>Tên</th>
                                                     <th>Hình ảnh</th>
-
                                                     <th>Giá</th>
                                                     <th>Giá giảm</th>
                                                     <th>Loại</th>
@@ -69,12 +68,9 @@ class Index extends BaseView
                                                     <tr>
                                                         <td><?= $item['id'] ?></td>
                                                         <td><?= $item['name'] ?></td>
-                                                        <td><?= $item['image'] ?>
+                                                        <td>
                                                             <img src="/public/uploads/products/<?= $item['image'] ?>" width="100px">
                                                         </td>
-
-
-
                                                         <td><?= number_format($item['price']) ?></td>
                                                         <td><?= number_format($item['discount_price']) ?></td>
                                                         <td><?= $item['category_name'] ?></td>

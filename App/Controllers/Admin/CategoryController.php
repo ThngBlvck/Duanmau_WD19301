@@ -67,41 +67,46 @@ class CategoryController
 
     // xử lý chức năng thêm
     public static function store()
-    {
-        //validation cac truong du lieu 
-        $is_valid = CategoryValidation::create();
-        if (!$is_valid) {
-            NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
-            header('location: /admin/categories/create');
-            exit;
-        }
-        $name = $_POST['name'];
-        $status = $_POST['status'];
-        // kiem tra ten loai co ton tai chua => khong duoc trung ten
-        $category = new Category();
-        $is_exist = $category->getOneCategoryByName($name);
-        if ($is_exist) {
-            NotificationHelper::error('store', 'Tên loại sản phẩm đã tồn tại');
-            header('location: /admin/categories/create');
-            exit;
-        }
-        //    echo 'oki';
-        // thuc hien them 
-
-
-        $data = [
-            'name' => $name,
-            'status' => $status,
-        ];
-        $result = $category->createCategory($data);
-        if ($result) {
-            NotificationHelper::success('store', 'Thêm loại sản phẩm thành công');
-            header('location: /admin/categories');
-        } else {
-            NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
-            header('location: /admin/categories/create');
-        }
+{
+    // Validate the form data
+    $is_valid = CategoryValidation::create();
+    if (!$is_valid) {
+        NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
+        header('location: /admin/categories/create');
+        exit;
     }
+
+    // Get data from POST request
+    $name = $_POST['name'];
+    $status = $_POST['status'];
+
+    // Check if the category name already exists
+    $category = new Category();
+    $is_exist = $category->getOneCategoryByName($name);
+    if ($is_exist) {
+        NotificationHelper::error('store', 'Tên loại sản phẩm đã tồn tại');
+        header('location: /admin/categories/create');
+        exit;
+    }
+
+    // Prepare data for insertion
+    $data = [
+        'name' => $name,
+        'status' => $status,
+    ];
+
+    // Attempt to create the category
+    $result = $category->createCategory($data);
+    if ($result) {
+        NotificationHelper::success('store', 'Thêm loại sản phẩm thành công');
+        header('location: /admin/categories');
+    } else {
+        NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
+        header('location: /admin/categories/create');
+    }
+    exit;
+}
+
 
 
     // hiển thị chi tiết

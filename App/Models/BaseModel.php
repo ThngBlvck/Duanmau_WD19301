@@ -134,16 +134,26 @@ abstract class BaseModel implements CrudInterface
     {
         $result = [];
         try {
-            $sql = "SELECT * FROM $this->table WHERE $name";
+            // Use a placeholder for the name parameter
+            $sql = "SELECT * FROM $this->table WHERE name = ?";
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
-
+    
+            // Bind the parameter and execute the query
             $stmt->bind_param('s', $name);
             $stmt->execute();
-            return $stmt->get_result()->fetch_assoc();
+    
+            // Fetch the result
+            $result = $stmt->get_result()->fetch_assoc();
+    
+            // Close the statement
+            $stmt->close();
+    
         } catch (\Throwable $th) {
             error_log('Lỗi khi lấy bằng tên: ' . $th->getMessage());
-            return $result;
         }
+    
+        return $result;
     }
+    
 }

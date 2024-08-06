@@ -9,8 +9,8 @@ use PDOException;
 class Database
 {
 
-    private $_host;
-    private $_username;
+    private $_host ;
+    private $_username ;
     private $_password;
     private $_database;
 
@@ -18,7 +18,7 @@ class Database
     {
         $this->_host = $_ENV['DB_HOST'];
         $this->_username = $_ENV['DB_USERNAME'];
-
+        $this->_password = $_ENV['DB_PASSWORD'] ;
         $this->_database = $_ENV['DB_NAME'];
     }
     // public function connect()
@@ -37,7 +37,7 @@ class Database
     public function Pdo()
     {
         try {
-            $conn = new PDO("mysql:host=$this->_host;dbname=$this->_database", $this->_username, );
+            $conn = new PDO("mysql:host=$this->_host;dbname=$this->_database", $this->_username, $this->_password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

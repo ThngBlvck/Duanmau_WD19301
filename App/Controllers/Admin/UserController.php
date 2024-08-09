@@ -47,7 +47,7 @@ class UserController
     }
 
 
-//     // xử lý chức năng thêm
+//// xử lý chức năng thêm
     public static function store()
     {
         //validation cac truong du lieu 

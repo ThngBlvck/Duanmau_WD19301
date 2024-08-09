@@ -34,14 +34,14 @@ class Product extends BaseModel
     {
         $result = [];
         try {
-        // $sql = "SELECT * FROM $this->table WHERE status=" . self::STATUS_ENABLE;
-        $sql = "SELECT products.* FROM products INNER JOIN categories ON products.category_id=categories.id WHERE products.status= " .  self::STATUS_ENABLE . " AND categories.status=" . self::STATUS_ENABLE;
-        $result = $this->_conn->MySQLi()->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    } catch (\Throwable $th) {
-        error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
-        return $result;
-    }
+            //$sql = "SELECT * FROM $this->table WHERE status=" . self::STATUS_ENABLE;
+            $sql = "SELECT products.* FROM products INNER JOIN categories ON products.category_id=categories.id WHERE products.status= " . self::STATUS_ENABLE . " AND categories.status=" . self::STATUS_ENABLE;
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
     }
 
     public function getOneProductByName(string $name)
@@ -58,7 +58,7 @@ class Product extends BaseModel
             FROM products
             INNER JOIN categories
             ON products.category_id = categories.id";
-    
+
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {

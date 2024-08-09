@@ -2,13 +2,14 @@
 
 namespace App\Views\Client\Pages\Product;
 
+use App\Helpers\AuthHelper;
 use App\Views\BaseView;
 
 class Detail extends BaseView
 {
     public static function render($data = null)
     {
-        // var_dump($_SESSION);
+        $is_login = AuthHelper::checkLogin();
 ?>
 
 
@@ -31,11 +32,14 @@ class Detail extends BaseView
 
                     <?php
                     else :
-                    ?>
+                    ?>  
+                   
                         <h6>Giá tiền: <?= number_format($data['product']['price']) ?> đ</h6>
                     <?php
                     endif;
                     ?>
+                     <h6>Số lượt xem: <?= $data['product']['view']?></h6>
+                    <h6>Danh mục: <?= $data['product']['category_name'] ?></h6>
 
                     <form action="#" method="post">
                         <input type="hidden" name="method" id="" value="POST">
@@ -52,69 +56,110 @@ class Detail extends BaseView
                             <h4 class="card-title">Bình luận mới nhất</h4>
                         </div>
                         <div class="comment-widgets">
+                            <?php
+                            if (isset($data) && isset($data['comment']) && $data && $data['comment']) :
 
-                            <!-- Comment Row -->
-                            <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="p-2">
+                                foreach ($data['comment'] as  $item) :
+                            ?>
+                                    <!-- Comment Row -->
+                                    <div class="d-flex flex-row comment-row m-t-0">
+                                        <div class="p-2">
+                                            <?php
+                                            if ($item['avatar']) :
+                                            ?>
+                                                <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="user" width="50" class="rounded-circle">
+                                            <?php
+                                            else :
+                                            ?>
+                                                <img src="<?= APP_URL ?>/public/uploads/users/default_user2.png" alt="user" width="50" class="rounded-circle">
+                                            <?php
+                                            endif;
+                                            ?>
+                                        </div>
+                                        <div class="comment-text w-100">
+                                            <h6 class="font-medium"><?= $item['name'] ?> - <?= $item['username'] ?> </h6>
+                                            <span class="m-b-15 d-block"><?= $item['content'] ?>...</span>
+                                            <div class="comment-footer">
+                                                <span class="text-muted float-right"><?= $item['date'] ?></span>
+                                                <?php
+                                                if (isset($data) &&  $is_login && ($_SESSION['user']['id'] == $item['users_id'])) :
+                                                ?>
+                                                    <button type="button" class="btn btn-cyan btn-sm" data-toggle="collapse" data-target="#<?= $item['username'] ?><?= $item['id'] ?>" aria-expanded="false" aria-controls="comment">Sửa</button>
+                                                    <form action="#" method="post" onsubmit="return confirm('Chắc chưa?')" style="display: inline-block">
+                                                        <input type="hidden" name="method" value="DELETE" id="">
+                                                        <input type="hidden" name="product_id" value="" id="">
+                                                        <button type="submit" class="btn btn-danger btn-sm">Xoá</button>
 
-                                    <img src="<?= APP_URL ?>/public/uploads/users/user1.jpeg" alt="user" width="50" class="rounded-circle">
-                                </div>
-                                <div class="comment-text w-100">
-                                    <h6 class="font-medium">Username</h6>
-                                    <span class="m-b-15 d-block">Good product...</span>
-                                    <div class="comment-footer">
-                                        <span class="text-muted float-right">2024-7-8 19:19:19</span>
+                                                    </form>
+                                                    <div class="collapse" id="<?= $item['username'] ?><?= $item['id'] ?>">
+                                                        <div class="card card-body mt-5">
+                                                            <form action="#" method="post">
+                                                                <input type="hidden" name="method" value="PUT" id="">
+                                                                <input type="hidden" name="product_id" value="" id="">
+                                                                <div class="form-group">
+                                                                    <label for="">Bình luận</label>
+                                                                    <textarea class="form-control rounded-0" name="content" id="" rows="3" placeholder="Nhập bình luận..."><?= $item['content'] ?>...</textarea>
+                                                                </div>
+                                                                <div class="comment-footer">
+                                                                    <button type="submit" class="btn btn-cyan btn-sm">Gửi</button>
+                                                                </div>
+                                                            </form>
 
-                                        <button type="button" class="btn btn-cyan btn-sm" data-toggle="collapse" data-target="#comment" aria-expanded="false" aria-controls="comment">Sửa</button>
-                                        <form action="#" method="post" onsubmit="return confirm('Chắc chưa?')" style="display: inline-block">
-                                            <input type="hidden" name="method" value="DELETE" id="">
-                                            <input type="hidden" name="product_id" value="" id="">
-                                            <button type="submit" class="btn btn-danger btn-sm">Xoá</button>
-
-                                        </form>
-                                        <div class="collapse" id="comment">
-                                            <div class="card card-body mt-5">
-                                                <form action="#" method="post">
-                                                    <input type="hidden" name="method" value="PUT" id="">
-                                                    <input type="hidden" name="product_id" value="" id="">
-                                                    <div class="form-group">
-                                                        <label for="">Bình luận</label>
-                                                        <textarea class="form-control rounded-0" name="content" id="" rows="3" placeholder="Nhập bình luận...">Good product...</textarea>
+                                                        </div>
                                                     </div>
-                                                    <div class="comment-footer">
-                                                        <button type="submit" class="btn btn-cyan btn-sm">Gửi</button>
-                                                    </div>
-                                                </form>
+                                                <?php
+                                                endif;
+                                                ?>
 
                                             </div>
                                         </div>
                                     </div>
+
+
+                                <?php
+                                endforeach;
+                            else :
+                                ?>
+                                <h6 class="text-center text-danger"> Chưa có bình luận</h6>
+
+                            <?php
+                            endif;
+                            ?>
+
+                            <?php
+                            if (isset($data) &&  $is_login) :
+                            ?>
+                                <div class="d-flex flex-row comment-row">
+
+                                    <div class="p-2">
+
+                                    <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="user" width="50" class="rounded-circle">
+
+                                    </div>
+                                    <div class="comment-text w-100">
+                                        <h6 class="font-medium"><?= $item['name'] ?> - <?= $item['username'] ?></h6>
+                                        <form action="#" method="post">
+                                            <input type="hidden" name="method" value="POST" id="" required>
+                                            <div class="form-group">
+                                                <label for="">Bình luận</label>
+                                                <textarea class="form-control rounded-0" name="content" id="" rows="3" placeholder="Nhập bình luận..." required></textarea>
+                                            </div>
+                                            <div class="comment-footer">
+                                                <button type="submit" class="btn btn-cyan btn-sm">Gửi</button>
+                                            </div>
+                                        </form>
+
+
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="d-flex flex-row comment-row">
-
-                                <div class="p-2">
-
-                                    <img src="<?= APP_URL ?>/public/uploads/users/user1.jpeg" alt="user" width="50" class="rounded-circle">
-                                </div>
-                                <div class="comment-text w-100">
-                                    <h6 class="font-medium">Username</h6>
-                                    <form action="#" method="post">
-                                        <input type="hidden" name="method" value="POST" id="" required>
-                                        <div class="form-group">
-                                            <label for="">Bình luận</label>
-                                            <textarea class="form-control rounded-0" name="content" id="" rows="3" placeholder="Nhập bình luận..." required></textarea>
-                                        </div>
-                                        <div class="comment-footer">
-                                            <button type="submit" class="btn btn-cyan btn-sm">Gửi</button>
-                                        </div>
-                                    </form>
-
-
-                                </div>
-                            </div>
-
+                            <?php
+                            else :
+                            ?>
+                                <h6 class="text-danger text-center"> Vui lòng Đăng nhập để bình luận</h6>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
 

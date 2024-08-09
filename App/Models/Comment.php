@@ -34,20 +34,7 @@ class Comment extends BaseModel
         return $this->delete($id);
     }
 
-    public function get5CommentNewestByProductAndStatus($id)
-    {
-        $sql = "SELECT comments.*, users.username, users.name, users.avatar 
-                FROM comments INNER JOIN users ON comments.user_id=users.id 
-                WHERE comments.product_id=? AND comments.status=" . self::STATUS_ENABLE .
-            " ORDER BY date DESC LIMIT 5";
-
-        $conn = $this->_conn->MySQLi();
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
+    
 
 
     public function getAllProductJoinCategory()
@@ -94,6 +81,49 @@ class Comment extends BaseModel
             $stmt->bind_param('i', $id);
             $stmt->execute();
             return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            NotificationHelper::error('getOneCommentJoinProductAndUser', 'Lỗi khi hiển thị chi tiết dữ liệu');
+            return $result;
+        }
+    }
+
+
+    // public function get5CommentNewestByProductAndStatus($id)
+    // {
+    //     $sql = "SELECT comments.*, users.username, users.name, users.avatar 
+    //             FROM comments INNER JOIN users ON comments.user_id=users.id 
+    //             WHERE comments.product_id=? AND comments.status=" . self::STATUS_ENABLE .
+    //         " ORDER BY date DESC LIMIT 5";
+
+    //     $conn = $this->_conn->MySQLi();
+    //     $stmt = $conn->prepare($sql);
+
+    //     $stmt->bind_param('i', $id);
+    //     $stmt->execute();
+    //     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    // }
+
+    public function get5CommentNewestByProductAndStatus($id)
+    {
+        $result = [];
+        try {
+            // $sql = "SELECT comments.*, products.name AS product_name, users.username FROM comments 
+            // INNER JOIN products ON comments.product_id=products.id 
+            // INNER JOIN users ON comments.users_id=users.id
+            // WHERE comments.id=?";
+
+            $sql = "SELECT comments.*, users.username, users.name, users.avatar 
+            FROM comments INNER JOIN users ON comments.users_id=users.id 
+            WHERE comments.product_id=? AND comments.status=" . self::STATUS_ENABLE .
+        " ORDER BY date DESC LIMIT 5";
+
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
             error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
             NotificationHelper::error('getOneCommentJoinProductAndUser', 'Lỗi khi hiển thị chi tiết dữ liệu');

@@ -79,7 +79,7 @@ class AuthHelper
             $user_data = json_encode($result);
 
             // lưu cookie 
-            setcookie('user', $user_data, time() + 3600 * 24 * 30 * 12, '/');
+            setcookie('user', $user_data, time()+3600*24*30*12, '/');
 
             $_SESSION['user'] = $result;
         }

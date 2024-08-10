@@ -32,13 +32,13 @@ class Detail extends BaseView
 
                     <?php
                     else :
-                    ?>  
-                   
+                    ?>
+
                         <h6>Giá tiền: <?= number_format($data['product']['price']) ?> đ</h6>
                     <?php
                     endif;
                     ?>
-                     <h6>Số lượt xem: <?= $data['product']['view']?></h6>
+                    <h6>Số lượt xem: <?= $data['product']['view'] ?></h6>
                     <h6>Danh mục: <?= $data['product']['category_name'] ?></h6>
 
                     <form action="#" method="post">
@@ -71,7 +71,7 @@ class Detail extends BaseView
                                             <?php
                                             else :
                                             ?>
-                                                <img src="<?= APP_URL ?>/public/uploads/users/default_user2.png" alt="user" width="50" class="rounded-circle">
+                                                <img src="<?= APP_URL ?>/public/uploads/users/default_user.png" alt="user" width="50" class="rounded-circle">
                                             <?php
                                             endif;
                                             ?>
@@ -84,18 +84,18 @@ class Detail extends BaseView
                                                 <?php
                                                 if (isset($data) &&  $is_login && ($_SESSION['user']['id'] == $item['users_id'])) :
                                                 ?>
-                                                    <button type="button" class="btn btn-cyan btn-sm" data-toggle="collapse" data-target="#<?= $item['username'] ?><?= $item['id'] ?>" aria-expanded="false" aria-controls="comment">Sửa</button>
-                                                    <form action="#" method="post" onsubmit="return confirm('Chắc chưa?')" style="display: inline-block">
+                                                    <button type="button" class="btn btn-cyan btn-sm" data-toggle="collapse" data-target="#<?= $item['username'] ?><?= $item['id'] ?>" aria-expanded="false" aria-controls="<?= $item['username'] ?><?= $item['id'] ?>">Sửa</button>
+                                                    <form action="/comments/<?= $item['id'] ?>" method="post" onsubmit="return confirm('Chắc chưa?')" style="display: inline-block">
                                                         <input type="hidden" name="method" value="DELETE" id="">
-                                                        <input type="hidden" name="product_id" value="" id="">
+                                                        <input type="hidden" name="product_id" value="<?=$data['product']['id']?>" id="">
                                                         <button type="submit" class="btn btn-danger btn-sm">Xoá</button>
 
                                                     </form>
                                                     <div class="collapse" id="<?= $item['username'] ?><?= $item['id'] ?>">
                                                         <div class="card card-body mt-5">
-                                                            <form action="#" method="post">
+                                                            <form action="/comments/<?= $item['id'] ?>" method="post">
                                                                 <input type="hidden" name="method" value="PUT" id="">
-                                                                <input type="hidden" name="product_id" value="" id="">
+                                                                <input type="hidden" name="product_id" value="<?=$data['product']['id']?>" id="">
                                                                 <div class="form-group">
                                                                     <label for="">Bình luận</label>
                                                                     <textarea class="form-control rounded-0" name="content" id="" rows="3" placeholder="Nhập bình luận..."><?= $item['content'] ?>...</textarea>
@@ -133,16 +133,28 @@ class Detail extends BaseView
 
                                     <div class="p-2">
 
-                                    <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="user" width="50" class="rounded-circle">
+                                        <?php
+                                        if ($_SESSION['user']['avatar']) :
+                                        ?>
+                                            <img src="<?= APP_URL ?>/public/uploads/users/<?=$_SESSION['user']['avatar']?>" alt="user" width="50" class="rounded-circle">
+                                        <?php
+                                        else :
+                                        ?>
+                                            <img src="<?= APP_URL ?>/public/uploads/users/default_user.png" alt="user" width="50" class="rounded-circle">
+                                        <?php
+                                        endif;
+                                        ?>
 
-                                    </div>
+                                    </div>  
                                     <div class="comment-text w-100">
-                                        <h6 class="font-medium"><?= $item['name'] ?> - <?= $item['username'] ?></h6>
-                                        <form action="#" method="post">
+                                        <h6 class="font-medium"><?=$_SESSION['user']['name']?> - <?=$_SESSION['user']['username']?></h6>
+                                        <form action="/comments" method="post">
                                             <input type="hidden" name="method" value="POST" id="" required>
+                                            <input type="hidden" name="product_id" id="product_id" value="<?=$data['product']['id']?>">
+                                            <input type="hidden" name="users_id" id="users_id" value="<?=$_SESSION['user']['id']?>">
                                             <div class="form-group">
-                                                <label for="">Bình luận</label>
-                                                <textarea class="form-control rounded-0" name="content" id="" rows="3" placeholder="Nhập bình luận..." required></textarea>
+                                                <label for="content">Bình luận</label>
+                                                <textarea class="form-control rounded-0" name="content" id="content" rows="3" placeholder="Nhập bình luận..."></textarea>
                                             </div>
                                             <div class="comment-footer">
                                                 <button type="submit" class="btn btn-cyan btn-sm">Gửi</button>
